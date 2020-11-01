@@ -15,11 +15,14 @@ class MainPageViewController: UIViewController {
     private var sectionInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
     var categories: [Category] = []
     var searchResults : [Result] = []
+    var searchResponse : SearchResponse?
     let client = Client()
 
     @IBOutlet weak var collection: UICollectionView!
     @IBOutlet weak var searchTable: UITableView!
     @IBOutlet weak var heigthTableSearch: NSLayoutConstraint!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - Override Methods
     
@@ -27,7 +30,7 @@ class MainPageViewController: UIViewController {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         collection.delegate = self
-        
+
         client.fetchCategories { (result) in
             switch result {
             case .succes(let object):
@@ -37,6 +40,12 @@ class MainPageViewController: UIViewController {
                 print(error.hashValue)
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchBar.showsCancelButton = true
+        activityIndicator.isHidden = true
     }
     
     override func viewWillLayoutSubviews() {
@@ -109,16 +118,48 @@ extension MainPageViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        
         client.search(with: searchText) { (result) in
             switch result {
             case .succes(let object):
                 if let results = object.results {
+                    self.searchResponse = object
+                    self.activityIndicator.isHidden = true
+                    self.activityIndicator.stopAnimating()
                     self.searchResults = results
-                    self.searchTable.reloadData()
+                    if self.searchResults.isEmpty {
+//                        self.view.addSubview(NoResultsView(frame: CGRect(x: 0, y: 0, width: 100, height: 200)))
+                    } else {
+                        self.searchTable.reloadData()
+                    }
                 }
+                
             case .failure(let error):
                 print(error.hashValue)
             }
         }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "Search") as! SearchPageViewController
+        vc.searchResponse = searchResponse
+        self.navigationController?.show(vc, sender: nil)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        clearSearchBar(searchBar)
+    }
+
+    func clearSearchBar(_ searchBar: UISearchBar) {
+        self.heigthTableSearch.constant = 0
+        searchBar.searchTextField.text = ""
+        searchResults.removeAll()
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
+        self.view.endEditing(true)
     }
 }

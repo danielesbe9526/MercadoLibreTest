@@ -6,8 +6,7 @@
 //
 
 import Foundation
-
-//typealias FetchCategories = (Result<String>) -> ()
+import UIKit
 
 protocol ClientProtocol {
     func fetchCategories(completion: @escaping (Response<[Category]>) -> ())
