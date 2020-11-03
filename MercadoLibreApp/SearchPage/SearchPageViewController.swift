@@ -20,7 +20,8 @@ class SearchPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        overrideUserInterfaceStyle = .light
+
         if let total = searchResponse?.paging?.total {
             numberResultsLabel.text = "\(total) resultados"
         }
@@ -29,34 +30,46 @@ class SearchPageViewController: UIViewController {
             items = results
         }
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        
+        itemsPerRow = UIDevice.current.orientation.isLandscape ? 5 : 2
+        collectionView.reloadData()
+        flowLayout.invalidateLayout()
+    }
 }
 
-extension SearchPageViewController: UICollectionViewDataSource {
+extension SearchPageViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath) as! ItemCollectionViewCell
-        cell.itemTittle.text = items[indexPath.row].title
-        cell.priceLabel.text = "$ \(items[indexPath.row].price ?? 0)"
-        cell.itemSubtitle.text = items[indexPath.row].stopTime ?? "2020"
-        cell.itemImage.loadImagesFrom(items[indexPath.row].thumbnail ?? "https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png")
+        cell.configureCell(with: items[indexPath.row])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "Detail") as! DetailPageViewController
+        vc.item = items[indexPath.row]
+        self.navigationController?.show(vc, sender: nil)
     }
 }
 
 extension SearchPageViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (view.frame.width / itemsPerRow) - 20, height: (view.frame.width / itemsPerRow) + 40 )
+        return CGSize(width: (view.frame.width / itemsPerRow) - 20, height: (view.frame.width / itemsPerRow) + 30 )
      }
 
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
        return sectionInsets
      }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
-    }
 }

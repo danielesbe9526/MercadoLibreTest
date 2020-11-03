@@ -26,7 +26,7 @@ enum ErrorType: LocalizedError, Error {
         case .jsonDecodeError:
             return "Failed To Decode Data To Json Model"
         default:
-        return self.errorDescription
+            return self.localizedDescription
         }
     }
 }

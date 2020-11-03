@@ -1,14 +1,14 @@
 //
-//  Network.swift
-//  MercadoLibreApp
+//  MockedNetwork.swift
+//  MercadoLibreAppTests
 //
-//  Created by Daniel Beltran😎 on 28/10/20.
+//  Created by Daniel Beltran😎 on 1/11/20.
 //
 
 import Foundation
 
-final class Network {
-    static let shared = Network()
+final class MockedNetwork {
+    static let shared = MockedNetwork()
     
     private let config: URLSessionConfiguration
     private let session: URLSession
@@ -18,7 +18,7 @@ final class Network {
         session = URLSession(configuration: config)
     }
     
-    func request(router: Router, completion: @escaping (Response<Data>) -> ()) {
+    func request(router: MockedRouter, completion: @escaping (Response<Data>) -> ()) {
         do {
             try session.dataTask(with: router.request()){ (data, urlResponse, error) in
                 DispatchQueue.main.async {
@@ -67,12 +67,3 @@ final class Network {
     }
 }
 
-extension URLResponse {
-    var getStatusCode: Int? {
-        if let httResponse = self as? HTTPURLResponse {
-            return httResponse.statusCode
-        } else {
-            return nil
-        }
-    }
-}

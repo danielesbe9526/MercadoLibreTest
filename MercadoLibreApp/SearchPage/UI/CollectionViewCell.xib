@@ -4,11 +4,13 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ItemCollectionViewCell" customModule="MercadoLibreApp" customModuleProvider="target">
             <connections>
+                <outlet property="itemCondition" destination="p6d-m7-Tqx" id="KCL-JG-G89"/>
                 <outlet property="itemImage" destination="JIz-ru-b5S" id="NMI-2R-JiA"/>
                 <outlet property="itemSubtitle" destination="YOf-TT-UGW" id="zUy-An-rjB"/>
                 <outlet property="itemTittle" destination="llh-nd-Xon" id="MB7-lL-UKd"/>
@@ -21,32 +23,42 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llh-nd-Xon">
-                    <rect key="frame" x="20" y="223.5" width="150" height="16"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <rect key="frame" x="20" y="228.5" width="150" height="16"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="$ 999.9999.9999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3j-ql-pEu">
-                    <rect key="frame" x="20" y="249.5" width="150" height="20.5"/>
+                    <rect key="frame" x="20" y="254.5" width="150" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" text="2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YOf-TT-UGW">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" text="Envio Gratis" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YOf-TT-UGW">
                     <rect key="frame" x="20" y="280" width="150" height="16"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                    <color key="textColor" systemColor="systemGreenColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="calendar.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="JIz-ru-b5S">
-                    <rect key="frame" x="0.0" y="44.5" width="190" height="168.5"/>
+                    <rect key="frame" x="0.0" y="44.5" width="190" height="163.5"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="190" id="C7s-3m-fEu"/>
                     </constraints>
                 </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="condition" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p6d-m7-Tqx">
+                    <rect key="frame" x="20" y="213.5" width="150" height="10"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="Ek9-CX-saA"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="p6d-m7-Tqx" secondAttribute="trailing" constant="20" id="3RO-LW-qxc"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="h3j-ql-pEu" secondAttribute="trailing" constant="20" id="4pI-Bd-jxy"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="YOf-TT-UGW" secondAttribute="trailing" constant="20" id="ClQ-6f-U7g"/>
                 <constraint firstAttribute="trailing" secondItem="llh-nd-Xon" secondAttribute="trailing" constant="20" id="CqY-oC-kSg"/>
@@ -54,12 +66,14 @@
                 <constraint firstItem="llh-nd-Xon" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="NwT-K6-uFk"/>
                 <constraint firstItem="JIz-ru-b5S" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Pc9-xT-FdZ"/>
                 <constraint firstItem="h3j-ql-pEu" firstAttribute="top" secondItem="llh-nd-Xon" secondAttribute="bottom" constant="10" id="Ui6-pw-rBE"/>
+                <constraint firstItem="p6d-m7-Tqx" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Zqd-R7-KEn"/>
                 <constraint firstItem="h3j-ql-pEu" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="fxC-mk-6WQ"/>
                 <constraint firstItem="YOf-TT-UGW" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="ojZ-6a-m5I"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="JIz-ru-b5S" secondAttribute="trailing" id="pQd-8P-xot"/>
                 <constraint firstItem="JIz-ru-b5S" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="rUr-V3-xMp"/>
-                <constraint firstItem="llh-nd-Xon" firstAttribute="top" secondItem="JIz-ru-b5S" secondAttribute="bottom" constant="10" id="wNN-H7-32d"/>
-                <constraint firstItem="YOf-TT-UGW" firstAttribute="top" secondItem="h3j-ql-pEu" secondAttribute="bottom" constant="10" id="wqq-43-IUf"/>
+                <constraint firstItem="p6d-m7-Tqx" firstAttribute="top" secondItem="JIz-ru-b5S" secondAttribute="bottom" constant="5" id="srH-LB-PNs"/>
+                <constraint firstItem="llh-nd-Xon" firstAttribute="top" secondItem="p6d-m7-Tqx" secondAttribute="bottom" constant="5" id="wpn-4f-h90"/>
+                <constraint firstItem="YOf-TT-UGW" firstAttribute="top" secondItem="h3j-ql-pEu" secondAttribute="bottom" constant="5" id="wqq-43-IUf"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="28.985507246376812" y="12.388392857142856"/>
@@ -67,5 +81,8 @@
     </objects>
     <resources>
         <image name="calendar.circle" catalog="system" width="128" height="121"/>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

@@ -8,21 +8,54 @@
 import Foundation
 import UIKit
 
-typealias  imageViewModelCompletionClosure = (_ result: Response<UIImage>) -> ()
-
-
 struct MainPageViewModel {
     
-    var mainPageService: MainPageService?
-
-    func downloadImages(with url: String, completion: @escaping imageViewModelCompletionClosure) {
-        mainPageService?.downloadImages(with: url, completion: { (response) in
+    var delegate: MainPageDelegate?
+    var client = Client()
+    
+    func fetchCategories() {
+        client.fetchCategories { (response) in
             switch response {
-            case .succes(let image):
-                completion(.succes(value: image))
+            case .succes(let object):
+                delegate?.fetchCategories(.succes(value: object))
             case .failure(let error):
-                completion(.failure(error: error))
+                delegate?.fetchCategories(.failure(error: error))
             }
-        })
+        }
+    }
+    
+    func searchItem(with text: String) {
+        client.search(with: text) { (result) in
+            switch result {
+            case .succes(let object):
+                delegate?.searchItem(.succes(value: object))
+            case .failure(let error):
+                delegate?.searchItem(.failure(error: error))
+            }
+        }
+    }
+    
+    func fetchItemsBy(categories: [Category]) {
+        
+        var categoryAndItems: [String: [Result]] = [:]
+        
+        /// this methos was called three times the request to get 3 diferent Categories
+        
+        for _ in 1...3 {
+            guard let randomElement = categories.randomElement() else {
+                return
+            }
+            
+            client.fetchItemsByCategoryParameter(with: randomElement.id) { (response) in
+                switch response {
+                case .succes(let object):
+                    categoryAndItems[randomElement.name] = object.results
+                    delegate?.fetchItemsByCategoryParameter(.succes(value: categoryAndItems))
+                case .failure(let error):
+                    delegate?.fetchItemsByCategoryParameter(.failure(error: error))
+                }
+            }
+        }
+        
     }
 }
