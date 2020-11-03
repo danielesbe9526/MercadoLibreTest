@@ -20,13 +20,16 @@ class NoResultsView: UIView {
     }
 
     func commonInit() {
-        let viewFromXib = instanceFromNib()
-        viewFromXib.bounds = self.bounds
+        let viewFromXib = loadViewFromNib()
+        viewFromXib.frame = bounds
+        viewFromXib.tag = 100
         addSubview(viewFromXib)
     }
-    
-    func instanceFromNib() -> NoResultsView {
-            let view = UINib(nibName: "NoResultsView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! NoResultsView
-            return view
-     }
+
+    func loadViewFromNib() -> UIView {
+        let bundle = Bundle(for: type(of: self))
+        let nib = UINib(nibName: "NoResultsView", bundle: bundle)
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
+        return view
+    }
 }

@@ -1,37 +1,31 @@
 //
-//  Router.swift
-//  MercadoLibreApp
+//  MockedRouter.swift
+//  MercadoLibreAppTests
 //
-//  Created by Daniel Beltran😎 on 28/10/20.
+//  Created by Daniel Beltran😎 on 1/11/20.
 //
 
 import Foundation
+//
+//typealias Parameters = [String: Any]
+//typealias Header = [String: String]
+//typealias queryParameters = [String: String]
+//
 
-
-typealias Parameters = [String: Any]
-typealias Header = [String: String]
-typealias queryParameters = [String: String]
-
-
-enum Router {
+enum MockedRouter {
     
     private struct Constants {
-        static let searchKeyParameter = "q"
-        static let itemsByCategoryParameter = "category"
-
+        static let searchKeyParameter = "A"
     }
     
-    case getCategories
-    case filter(query: String)
-    case getItemsByCategory(category: String)
+    case badUrl
     
     private var baseUrl: String { "https://api.mercadolibre.com/sites/MCO" }
 
     // MARK: - URL
 
     private enum URLPaths: String {
-        case categories = "/categories"
-        case filter = "/search"
+        case badUrl = "qwery"
     }
     
     private enum HTTPMethod: String {
@@ -41,19 +35,15 @@ enum Router {
     
     private var method: HTTPMethod {
         switch self {
-        case .getCategories:
+        case .badUrl:
             return .get
-        case .filter, .getItemsByCategory:
-            return .post
         }
     }
     
     private var path: String {
         switch self {
-        case .getCategories:
-            return URLPaths.categories.rawValue
-        case .filter, .getItemsByCategory:
-            return URLPaths.filter.rawValue
+        case .badUrl:
+            return URLPaths.badUrl.rawValue
         }
     }
     
@@ -61,26 +51,22 @@ enum Router {
     
     private var bodyParameters: Parameters? {
         switch self {
-        case .getCategories, .filter, .getItemsByCategory:
+        case .badUrl:
             return nil
         }
     }
     
     private var headers: Header? {
         switch self {
-        case .getCategories, .filter, .getItemsByCategory:
+        case .badUrl:
             return nil
         }
     }
     
     private var queryParameters: queryParameters?{
         switch self {
-        case .getCategories:
+        case .badUrl:
             return nil
-        case .filter(let query):
-            return [Constants.searchKeyParameter : query]
-        case .getItemsByCategory(let category):
-            return [Constants.itemsByCategoryParameter : category, "limit": "6"]
         }
     }
     
@@ -120,17 +106,17 @@ enum Router {
     }
 }
 
-extension URL {
-    func appending(_ queryItem: String, value: String?) -> URL {
-        guard var urlComponents = URLComponents(string: absoluteString) else {
-            return absoluteURL
-        }
-
-        var queryItems: [URLQueryItem] = urlComponents.queryItems ??  []
-        let queryItem = URLQueryItem(name: queryItem, value: value)
-        queryItems.append(queryItem)
-        urlComponents.queryItems = queryItems
-
-        return urlComponents.url ?? absoluteURL
-    }
-}
+//extension URL {
+//    func appending(_ queryItem: String, value: String?) -> URL {
+//        guard var urlComponents = URLComponents(string: absoluteString) else {
+//            return absoluteURL
+//        }
+//
+//        var queryItems: [URLQueryItem] = urlComponents.queryItems ??  []
+//        let queryItem = URLQueryItem(name: queryItem, value: value)
+//        queryItems.append(queryItem)
+//        urlComponents.queryItems = queryItems
+//
+//        return urlComponents.url ?? absoluteURL
+//    }
+//}
