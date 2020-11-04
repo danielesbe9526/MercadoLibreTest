@@ -37,7 +37,7 @@ class DetailPageViewController: UIViewController {
         condition.text = item?.condition
         soldCuantity.text = "- \(item?.soldQuantity ?? 0) vendidos"
         itemTitle.text = item?.title
-        itemPrice.text = "\(Utils.shared.formatPrice(item?.price))) \(item?.currencyID ?? "COP")"
+        itemPrice.text = "\(Utils.shared.formatPrice(item?.price)) \(item?.currencyID ?? "COP")"
         cuantity.text = "\(item?.availableQuantity ?? 0)"
         freeShiping.isHidden = !(item?.shipping?.freeShipping ?? false)
         adrees.text = "\(item?.address?.stateName ?? "") - \(item?.address?.cityName ?? "")"

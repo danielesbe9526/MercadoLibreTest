@@ -23,6 +23,7 @@
 		CE97FAE42551FB06007BAE6E /* SearchPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0E98F254DC3DA00509D61 /* SearchPageViewController.swift */; };
 		CE97FAEF2551FBC1007BAE6E /* UIImageView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0E9C3254E549300509D61 /* UIImageView+extension.swift */; };
 		CE97FAFA2551FC67007BAE6E /* UtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE97FAF92551FC67007BAE6E /* UtilsTest.swift */; };
+		CE97FB182552121E007BAE6E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE97FAA72551F61D007BAE6E /* Utils.swift */; };
 		CEC0E97D254CACC500509D61 /* NoResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC0E97C254CACC500509D61 /* NoResultsView.xib */; };
 		CEC0E97E254CACC500509D61 /* NoResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC0E97C254CACC500509D61 /* NoResultsView.xib */; };
 		CEC0E983254CAECA00509D61 /* NoResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0E982254CAECA00509D61 /* NoResultsView.swift */; };
@@ -456,6 +457,7 @@
 				CEC0EA64254F4F2B00509D61 /* MockedRouter.swift in Sources */,
 				CEC0EA7C254F569500509D61 /* MainPageViewController.swift in Sources */,
 				CECB3CC02549C20B0070F36A /* EndPointsTest.swift in Sources */,
+				CE97FB182552121E007BAE6E /* Utils.swift in Sources */,
 				CE97FAE42551FB06007BAE6E /* SearchPageViewController.swift in Sources */,
 				CE97FABA2551F97C007BAE6E /* Client.swift in Sources */,
 				CE97FACC2551FAA3007BAE6E /* Category.swift in Sources */,

@@ -8,35 +8,94 @@
 import XCTest
 
 class MercadoLibreAppUITests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    
+    func testSearchItem() {
+        
         let app = XCUIApplication()
         app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let search = app.searchFields["Search"]
+        search.tap()
+        search.typeText("Silla")
+        
+        let tablesQuery = app.tables
+        let cell = tablesQuery.cells.firstMatch
+        
+        XCTAssertTrue(cell.exists)
+        
+        cell.tap()
+        
+        let scrollViewsQuery = app.scrollViews
+        let elementsQuery = scrollViewsQuery.otherElements
+        
+        
+        XCTAssertTrue(elementsQuery.staticTexts["Cantidad:"].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["Informacion del vendedor"].exists)
+        XCTAssertTrue( elementsQuery.staticTexts["Caracteristicas"].exists)
+        XCTAssertTrue( elementsQuery.staticTexts["Ubicacion"].exists)
     }
+    
+    func testItemDetail() {
+        let app = XCUIApplication()
+        app.launch()
+        let search = app.searchFields["Search"]
+        search.tap()
+        search.typeText("Carro")
+        
+        let tablesQuery = app.tables
+        tablesQuery.cells.firstMatch.tap()
+        
+        let scrollViewsQuery = app.scrollViews
+        let elementsQuery = scrollViewsQuery.otherElements
+        
+        
+        XCTAssertTrue(elementsQuery.staticTexts["Cantidad:"].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["Informacion del vendedor"].exists)
+        XCTAssertTrue( elementsQuery.staticTexts["Caracteristicas"].exists)
+        XCTAssertTrue( elementsQuery.staticTexts["Ubicacion"].exists)
+    }
+    
+    func testCategorySections() {
+        
+        let app = XCUIApplication()
+        app.launch()
+        let collectionViewsQuery = app.collectionViews
+        
+        let verticalScrollBar6PagesCollectionView = collectionViewsQuery.containing(.other, identifier:"Vertical scroll bar, 6 pages").element
+        verticalScrollBar6PagesCollectionView.swipeUp()
+        
+        XCTAssertTrue(verticalScrollBar6PagesCollectionView.exists)
+    }
+    
+    func testEmptySearch() {
+        let app = XCUIApplication()
+        app.launch()
+        let search = app.searchFields["Search"]
+        search.tap()
+        search.typeText("A")
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+        let tittle =  app.staticTexts["No  encontramos publicaciones "]
+        let subtittle = app.staticTexts["Revisa que la palabra este bien escrita  Tambien puedes probar con menos terminos o mas generales."]
+        
+        XCTAssertTrue(tittle.exists)
+        XCTAssertTrue(subtittle.exists)
+    }
+    
+    func testHideTableOnCancelButton(){
+        
+        let app = XCUIApplication()
+        app.launch()
+        let searchSearchField = app.searchFields["Search"]
+        searchSearchField.tap()
+        searchSearchField.typeText("qwerty")
+        
+        let tablesQuery = app.tables
+                
+        app.staticTexts["Cancel"].tap()
+           
+        XCTAssertTrue(!tablesQuery.cells.firstMatch.exists)
+        
+        searchSearchField.tap()
+        
+        XCTAssertTrue(!tablesQuery.cells.firstMatch.exists)
     }
 }
