@@ -7,14 +7,8 @@
 
 import Foundation
 
-protocol ClientProtocol {
-    func fetchCategories(completion: @escaping (Response<[Category]>) -> ())
-    func fetchItemsByCategoryParameter(with category: String, completion: @escaping (Response<SearchResponse>) -> ())
-}
-
-final class Client: ClientProtocol {
+final class Client {
     func fetchItemsByCategoryParameter(with category: String, completion: @escaping (Response<SearchResponse>) -> ()) {
-       
         Network.shared.request(router: .getItemsByCategory(category: category)) { (response) in
             switch response {
             case .succes:
